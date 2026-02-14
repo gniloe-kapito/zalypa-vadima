@@ -2,25 +2,272 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Полный тест по электроустановкам</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест по электроустановкам</title>
 <style>
-body {font-family: Arial; margin:20px; background:#f2f4f8;}
-h1 {text-align:center;}
-.question {background:white; padding:15px; margin-bottom:15px; border-radius:8px; box-shadow:0 0 5px rgba(0,0,0,0.1);}
-textarea {width:100%; height:90px; margin-top:10px;}
-button {padding:12px 25px; font-size:16px; cursor:pointer; margin:10px 5px;}
-.result {background:#eef6ff; padding:10px; margin-top:10px; border-left:4px solid #2196f3;}
-.correct {background:#e8ffe8; border-left:4px solid green;}
-.stats {font-size:18px; margin-bottom:20px;}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #2d2d44 0%, #1f1f30 100%);
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #00d4ff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.subtitle {
+    color: #a0a0b0;
+    font-size: 1.1em;
+}
+
+.stats {
+    background: linear-gradient(135deg, #2d2d44 0%, #1f1f30 100%);
+    padding: 20px 30px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    font-size: 1.2em;
+    color: #00d4ff;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 15px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    color: #0f0f1e;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #444466 0%, #333355 100%);
+    color: #e0e0e0;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(68, 68, 102, 0.4);
+}
+
+.question {
+    background: linear-gradient(135deg, #252538 0%, #1a1a2e 100%);
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.question:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15);
+}
+
+.question strong {
+    display: block;
+    color: #00d4ff;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    margin-top: 10px;
+    padding: 15px;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    border: 2px solid #333355;
+    border-radius: 10px;
+    resize: vertical;
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+}
+
+.result {
+    background: rgba(0, 212, 255, 0.1);
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #00d4ff;
+    animation: fadeIn 0.4s ease;
+}
+
+.result strong {
+    color: #00d4ff;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.correct {
+    background: rgba(0, 255, 136, 0.1);
+    border-left-color: #00ff88;
+}
+
+.correct strong {
+    color: #00ff88;
+}
+
+.empty-answer {
+    color: #ff6b6b;
+    font-style: italic;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #1a1a2e;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00d4ff 0%, #00ff88 100%);
+    transition: width 0.5s ease;
+    border-radius: 10px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+    margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    button {
+        width: 100%;
+    }
+    
+    .question {
+        padding: 20px;
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00d4ff 0%, #0099cc 100%);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #00e6ff 0%, #00aadd 100%);
+}
 </style>
 </head>
 <body>
 
-<h1>ПОШЁЛ НАХУЙ (67 вопросов)</h1>
-<div class="stats" id="stats"></div>
-<div id="test"></div>
-<button onclick="checkAnswers()">Показать результаты</button>
-<button onclick="resetTest()">Очистить ответы</button>
+<div class="container">
+    <header>
+        <h1>⚡ Тест по электроустановкам</h1>
+        <p class="subtitle">69 вопросов для проверки знаний</p>
+    </header>
+
+    <div class="stats" id="stats">
+        <div>Готовы начать? Ответьте на вопросы ниже</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-primary" onclick="checkAnswers()">📊 Показать результаты</button>
+        <button class="btn-secondary" onclick="resetTest()">🔄 Очистить ответы</button>
+    </div>
+
+    <div id="test"></div>
+
+    <footer>
+        <p>© 2026 Система тестирования знаний по электроустановкам</p>
+    </footer>
+</div>
 
 <script>
 
@@ -109,11 +356,44 @@ questions.forEach((item, index) => {
     div.className = "question";
     div.innerHTML = `
         <strong>${item.q}</strong>
-        <textarea id="answer${index}"></textarea>
+        <textarea id="answer${index}" placeholder="Введите ваш ответ здесь..."></textarea>
         <div id="result${index}"></div>
     `;
     container.appendChild(div);
 });
+
+// Update progress bar when typing
+questions.forEach((item, index) => {
+    document.getElementById(`answer${index}`).addEventListener('input', updateProgress);
+});
+
+function updateProgress() {
+    let filled = 0;
+    questions.forEach((item, index) => {
+        if(document.getElementById(`answer${index}`).value.trim() !== "") {
+            filled++;
+        }
+    });
+    
+    const percentage = (filled / questions.length) * 100;
+    document.getElementById("progressBar").style.width = percentage + "%";
+    
+    if(filled === 0) {
+        document.getElementById("stats").innerHTML = `
+            <div>Готовы начать? Ответьте на вопросы ниже</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: ${percentage}%"></div>
+            </div>
+        `;
+    } else {
+        document.getElementById("stats").innerHTML = `
+            <div>Заполнено ответов: ${filled} из ${questions.length} (${Math.round(percentage)}%)</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: ${percentage}%"></div>
+            </div>
+        `;
+    }
+}
 
 function checkAnswers() {
     let filled = 0;
@@ -122,25 +402,44 @@ function checkAnswers() {
         const userAnswer = document.getElementById(`answer${index}`).value.trim();
         if(userAnswer !== "") filled++;
 
+        const emptyClass = userAnswer === "" ? ' empty-answer' : '';
         resultDiv.innerHTML = `
-            <div class="result"><strong>Ваш ответ:</strong><br>${userAnswer || "— пусто —"}</div>
+            <div class="result"><strong>Ваш ответ:</strong><br><span class="${emptyClass}">${userAnswer || "— пусто —"}</span></div>
             <div class="result correct"><strong>Правильный ответ:</strong><br>${item.a}</div>
         `;
     });
 
-    document.getElementById("stats").innerHTML =
-        `Заполнено ответов: ${filled} из ${questions.length}`;
+    const percentage = (filled / questions.length) * 100;
+    document.getElementById("stats").innerHTML = `
+        <div>Заполнено ответов: ${filled} из ${questions.length} (${Math.round(percentage)}%)</div>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: ${percentage}%"></div>
+        </div>
+    `;
+    
+    // Scroll to top to see results
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function resetTest() {
-    questions.forEach((item, index) => {
-        document.getElementById(`answer${index}`).value = "";
-        document.getElementById(`result${index}`).innerHTML = "";
-    });
-    document.getElementById("stats").innerHTML = "";
+    if(confirm('Вы уверены, что хотите очистить все ответы?')) {
+        questions.forEach((item, index) => {
+            document.getElementById(`answer${index}`).value = "";
+            document.getElementById(`result${index}`).innerHTML = "";
+        });
+        document.getElementById("stats").innerHTML = `
+            <div>Готовы начать? Ответьте на вопросы ниже</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+            </div>
+        `;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
+
+// Initial progress update
+updateProgress();
 
 </script>
 </body>
 </html>
-
